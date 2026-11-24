@@ -1,3 +1,5 @@
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template/wishlist?utm_medium=integration&utm_source=button&utm_campaign=wishlist)
+
 # Wishlist on Railway
 
 One-click Railway template for [Wishlist](https://github.com/cmintey/wishlist) (MIT), a self-hosted wishlist you share with friends and family: they see what you want, claim gifts, and the claims stay hidden from you so the surprise holds.
@@ -11,7 +13,7 @@ One service, `Wishlist`, built from this repo:
 - The SvelteKit app and its bundled Caddy proxy on Railway's `PORT`, with a public Railway domain and a `/healthz` health check.
 - SQLite database and uploaded images on one Railway volume at `/usr/src/app/data`, so data survives redeploys and restarts.
 - On the first boot, before the public port opens, an **admin account is created** from generated variables and **public sign-up is switched off** (upstream would make the first visitor the admin). If that step fails, the service stops instead of starting with open sign-up.
-- Fits Railway's Free plan: tested with 0.5 GB RAM / 1 vCPU. Threads and the Node heap are sized from the container's limits.
+- Fits Railway's Free plan: tested with 0.5 GB RAM / 1 vCPU (about 120 MB in use after adding items with images). Threads and the Node heap are sized from the container's limits.
 
 ## Variables
 

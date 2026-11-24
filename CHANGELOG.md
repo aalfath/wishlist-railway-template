@@ -8,3 +8,4 @@ First release of this template.
 - SQLite database and uploads on one Railway volume at `/usr/src/app/data`.
 - Admin account created on the first boot from generated variables; public sign-up off by default.
 - `/healthz` health check; exits non-zero if the app or Caddy stops.
+- Deploy on Railway button in the README.
