@@ -1,0 +1,42 @@
+{
+	auto_https off
+	admin off
+	servers {
+		# Railway's edge proxy: trust its X-Forwarded-* headers.
+		trusted_proxies static 100.64.0.0/10 152.233.0.0/16 127.0.0.1/32 ::1/128
+	}
+}
+
+:{$PORT:3280} {
+	@static {
+		file
+		path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.webp
+	}
+
+	@not_sse {
+		not path /wishlists/*/events
+		not path /lists/*/events
+	}
+
+	# Health check for Railway: answers 200 only when the app itself answers.
+	handle /healthz {
+		rewrite * /login
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	# User images (uploads/ points at the Railway volume).
+	handle_path /api/assets/* {
+		header @static Cache-Control max-age=31536000
+		root * /usr/src/app/uploads/
+		file_server
+	}
+
+	handle {
+		encode @not_sse {
+			gzip
+		}
+		reverse_proxy 127.0.0.1:3000 {
+			flush_interval -1
+		}
+	}
+}
